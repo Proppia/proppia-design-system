@@ -1,0 +1,147 @@
+/**
+ * PROPPIA DESIGN SYSTEM TOKENS
+ * Base tokens for the Proppia Design System Playground
+ * Production: Use BW Nista font family
+ */
+
+:root {
+  /* ============================================
+     NEUTRALS
+     ============================================ */
+  --color-chalk: #F1F1F1;
+  --color-charcoal: #1E1E1E;
+  --color-charcoal-60: rgba(30, 30, 30, 0.6);
+  --color-charcoal-40: rgba(30, 30, 30, 0.4);
+  --color-charcoal-24: rgba(30, 30, 30, 0.24);
+  --color-charcoal-12: rgba(30, 30, 30, 0.12);
+  --color-charcoal-8: rgba(30, 30, 30, 0.08);
+  --color-charcoal-5: rgba(30, 30, 30, 0.05);
+
+  /* ============================================
+     SPECTRUM (FUNCTIONAL)
+     ============================================ */
+  --color-yellow: #F6E342;    /* Warning / Highlight */
+  --color-mint: #75EFB1;      /* Success / Positive */
+  --color-turquoise: #23F8F7; /* Info / Focus */
+
+  /* ============================================
+     SPECTRUM GRADIENT (IDENTIDAD — SOLO LINEAL)
+     Permitido SOLO en:
+     - Barras laterales finas (4-8px width)
+     - Separadores horizontales (4px height)
+     - Progress fills
+     - Bordes/acento mínimo
+     
+     PROHIBIDO en:
+     - Fondos completos de cards
+     - Fondos de botones por defecto
+     - Decoración sin propósito
+     ============================================ */
+  --gradient-spectrum: linear-gradient(135deg, #F6E342 0%, #75EFB1 50%, #23F8F7 100%);
+  --gradient-spectrum-horizontal: linear-gradient(90deg, #F6E342 0%, #75EFB1 50%, #23F8F7 100%);
+  --gradient-spectrum-vertical: linear-gradient(180deg, #F6E342 0%, #75EFB1 50%, #23F8F7 100%);
+
+  /* ============================================
+     SPACING (BASE UNIT: 8px)
+     ============================================ */
+  --space-1: 8px;    /* Tight */
+  --space-2: 16px;   /* Component */
+  --space-3: 24px;   /* Related */
+  --space-4: 32px;   /* Groups */
+  --space-6: 48px;   /* Sections */
+  --space-8: 64px;   /* Major */
+  --space-12: 96px;  /* Breaks */
+  --space-16: 128px; /* Hero */
+
+  /* ============================================
+     BORDER RADIUS
+     ============================================ */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* ============================================
+     SHADOWS (MÍNIMO)
+     ============================================ */
+  --shadow-sm: 0 1px 2px rgba(30, 30, 30, 0.08);
+  --shadow-md: 0 4px 8px rgba(30, 30, 30, 0.12);
+
+  /* ============================================
+     TYPOGRAPHY SCALE
+     Base: 16px (1rem)
+     Ratio: ~1.25 (Major Third)
+     ============================================ */
+  --text-xs: 0.625rem;   /* 10px */
+  --text-sm: 0.8125rem;  /* 13px */
+  --text-base: 1rem;     /* 16px */
+  --text-lg: 1.25rem;    /* 20px */
+  --text-xl: 1.5625rem;  /* 25px */
+  --text-2xl: 1.9375rem; /* 31px */
+  --text-3xl: 2.4375rem; /* 39px */
+  --text-4xl: 3.0625rem; /* 49px */
+  --text-5xl: 3.8125rem; /* 61px */
+  --text-6xl: 4.75rem;   /* 76px */
+
+  /* ============================================
+     FONT WEIGHTS
+     ============================================ */
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-bold: 700;
+  --font-black: 900;
+
+  /* ============================================
+     LINE HEIGHTS
+     ============================================ */
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-loose: 1.75;
+
+  /* ============================================
+     LAYOUT
+     ============================================ */
+  --grid-columns: 12;
+  --grid-gutter: 24px;
+  --grid-margin: 48px;
+  --container-max: 1440px;
+}
+
+/* ============================================
+   PRODUCTION NOTE
+   ============================================ */
+/*
+  Font Family:
+  - Production: BW Nista
+  - Placeholder: Inter (system font)
+  
+  Cuando esté disponible BW Nista, actualizar:
+  
+  @font-face {
+    font-family: 'BW Nista';
+    src: url('/fonts/BWNista-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'BW Nista';
+    src: url('/fonts/BWNista-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'BW Nista';
+    src: url('/fonts/BWNista-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'BW Nista';
+    src: url('/fonts/BWNista-Black.woff2') format('woff2');
+    font-weight: 900;
+    font-display: swap;
+  }
+*/

@@ -1,0 +1,110 @@
+:root {
+  /* Tipografía oficial Proppia (brandbook) */
+  --font-sans: "Bw Gradual", "Bw Nista Grotesk", ui-sans-serif, system-ui, sans-serif;
+  /* ↑ Tipografía oficial — Bw Gradual es la fuente principal del brandbook */
+
+  /*
+   * Light mode — Proppia palette
+   * Chalk #F1F1F1, Charcoal #1E1E1E, Turquoise #23F8F7, Mint #75EFB1, Yellow #F6E342
+   */
+  --background: 0 0% 98%;        /* near-white, clean canvas */
+  --foreground: 0 0% 10%;        /* near-black text */
+
+  --card: 0 0% 100%;             /* pure white cards */
+  --card-foreground: 0 0% 10%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 10%;
+
+  --primary: 179 80% 28%;        /* Dark teal — accessible on white (≥4.5:1) */
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 0 0% 95%;
+  --secondary-foreground: 0 0% 15%;
+
+  --muted: 0 0% 95%;
+  --muted-foreground: 0 0% 42%;
+
+  --accent: 149 55% 30%;         /* Dark green — accessible on white */
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 84% 55%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 0 0% 88%;
+  --input: 0 0% 88%;
+  --ring: 179 93% 40%;
+
+  --radius: 10px;
+  --carousel-spacing: 0.25rem;
+
+  /* ── Grid tokens ──────────────────────────────────────────
+   * El grid es el segundo recurso gráfico estructural de Proppia.
+   * Dos modos: decorativo (fondo atmosférico) y layout (divisor de contenido).
+   * ─────────────────────────────────────────────────────── */
+
+  /* Líneas del grid */
+  --grid-line:        rgba(255, 255, 255, 0.08);   /* Modo decorativo — fondo sutil */
+  --grid-line-layout: rgba(255, 255, 255, 0.18);   /* Modo layout — divisores visibles */
+  --grid-stroke:      0.5px;                        /* Grosor de línea */
+
+  /* Presets de columnas — número de divisiones verticales */
+  --grid-cols-2:  2;
+  --grid-cols-4:  4;
+  --grid-cols-6:  6;
+  --grid-cols-8:  8;   /* Estándar brandbook */
+  --grid-cols-12: 12;
+
+  /* Presets de filas — número de divisiones horizontales */
+  --grid-rows-2:  2;
+  --grid-rows-4:  4;   /* Estándar brandbook */
+  --grid-rows-6:  6;
+
+  /* ── Pixel tokens ─────────────────────────────────────────
+   * Recurso gráfico principal de Proppia.
+   * Cuadrado con degradado de marca. Sin border-radius.
+   * ─────────────────────────────────────────────────────── */
+  --pixel-gradient: linear-gradient(135deg, #F6E342 0%, #75EFB1 50%, #23F8F7 100%);
+
+  /* Blur: 4 niveles de difusión (filter: blur) */
+  --pixel-blur-1: 2px;   /* Sutil  — textura suave, casi intacto */
+  --pixel-blur-2: 8px;   /* Leve   — difusión visible, bordes suaves */
+  --pixel-blur-3: 20px;  /* Medio  — mancha de color, presencia ambiental */
+  --pixel-blur-4: 48px;  /* Intenso — glow amplio, luz ambiental de fondo */
+}
+
+.dark {
+  /*
+   * Dark mode — Proppia Charcoal base
+   */
+  --background: 0 0% 10%;        /* deep Charcoal */
+  --foreground: 0 0% 96%;
+
+  --card: 0 0% 13%;
+  --card-foreground: 0 0% 96%;
+
+  --popover: 0 0% 13%;
+  --popover-foreground: 0 0% 96%;
+
+  --primary: 179 93% 55%;        /* Turquoise bright in dark */
+  --primary-foreground: 0 0% 10%;
+
+  --secondary: 0 0% 17%;
+  --secondary-foreground: 0 0% 92%;
+
+  --muted: 0 0% 17%;
+  --muted-foreground: 0 0% 62%;
+
+  --accent: 149 80% 70%;         /* Mint bright in dark */
+  --accent-foreground: 0 0% 10%;
+
+  --destructive: 0 72% 50%;
+  --destructive-foreground: 0 0% 96%;
+
+  --border: 0 0% 20%;
+  --input: 0 0% 20%;
+  --ring: 179 93% 55%;
+
+  --radius: 10px;
+  --carousel-spacing: 0.25rem;
+}

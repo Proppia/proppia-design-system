@@ -1,0 +1,25 @@
+{
+  "name": "proppia-design-system",
+  "private": true,
+  "packageManager": "pnpm@10.30.3",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev:docs": "corepack pnpm --filter @proppia/docs dev",
+    "build:ui": "corepack pnpm --filter @proppia/ui build",
+    "build": "corepack pnpm -r build",
+    "lint": "corepack pnpm -r lint",
+    "format": "prettier . -w",
+    "import:branding": "powershell -ExecutionPolicy Bypass -File scripts/import-branding.ps1"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}
+

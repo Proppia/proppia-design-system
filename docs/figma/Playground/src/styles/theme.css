@@ -1,0 +1,248 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Proppia Brand Colors */
+  --chalk: #F1F1F1;
+  --charcoal: #1E1E1E;
+  --yellow: #F6E342;
+  --mint-green: #75EFB1;
+  --turquoise: #23F8F7;
+  
+  /* Charcoal Opacity Variations */
+  --charcoal-60: rgba(30, 30, 30, 0.6);
+  --charcoal-40: rgba(30, 30, 30, 0.4);
+  --charcoal-24: rgba(30, 30, 30, 0.24);
+  --charcoal-20: rgba(30, 30, 30, 0.2);
+  --charcoal-12: rgba(30, 30, 30, 0.12);
+  --charcoal-08: rgba(30, 30, 30, 0.08);
+  --charcoal-05: rgba(30, 30, 30, 0.05);
+  --charcoal-03: rgba(30, 30, 30, 0.03);
+  
+  /* Chalk Opacity Variations */
+  --chalk-80: rgba(241, 241, 241, 0.8);
+  --chalk-20: rgba(241, 241, 241, 0.2);
+  
+  /* Spectrum Colors Opacity */
+  --yellow-20: rgba(246, 227, 66, 0.2);
+  --mint-20: rgba(117, 239, 177, 0.2);
+  --turquoise-20: rgba(35, 248, 247, 0.2);
+  
+  /* Semantic Colors */
+  --success: #75EFB1;
+  --warning: #F6E342;
+  --error: #FF6B6B;
+  --info: #23F8F7;
+  
+  /* Data Visualization Palette */
+  --data-1: #F6E342;
+  --data-2: #75EFB1;
+  --data-3: #23F8F7;
+  --data-4: #B8B8B8;
+  --data-5: #6B6B6B;
+  
+  /* Spectrum Gradient */
+  --gradient-spectrum: linear-gradient(135deg, #F6E342 0%, #75EFB1 50%, #23F8F7 100%);
+  
+  /* Typography Scale - Major Third (1.250 ratio) */
+  /* Font sizes in px converted to rem for better accessibility */
+  --text-xs: 0.625rem; /* 10px */
+  --text-sm: 0.8125rem; /* 13px */
+  --text-base: 1rem; /* 16px */
+  --text-lg: 1.25rem; /* 20px */
+  --text-xl: 1.5625rem; /* 25px */
+  --text-2xl: 1.9375rem; /* 31px */
+  --text-3xl: 2.4375rem; /* 39px */
+  --text-4xl: 3.0625rem; /* 49px */
+  
+  /* Font Weights */
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-bold: 700;
+  --font-black: 900;
+  
+  /* Line Heights */
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-loose: 1.75;
+  
+  /* Spacing Scale - 8px base unit */
+  --space-1: 0.5rem; /* 8px */
+  --space-2: 1rem; /* 16px */
+  --space-3: 1.5rem; /* 24px */
+  --space-4: 2rem; /* 32px */
+  --space-6: 3rem; /* 48px */
+  --space-8: 4rem; /* 64px */
+  --space-12: 6rem; /* 96px */
+  --space-16: 8rem; /* 128px */
+  
+  /* Border Radius */
+  --radius-none: 0;
+  --radius-sm: 0.25rem; /* 4px */
+  --radius-md: 0.5rem; /* 8px */
+  --radius-lg: 0.75rem; /* 12px */
+  --radius-full: 9999px;
+  
+  /* Shadows (minimal use philosophy) */
+  --shadow-sm: 0 1px 2px rgba(30, 30, 30, 0.08);
+  --shadow-md: 0 4px 8px rgba(30, 30, 30, 0.12);
+  
+  /* Proppia Theme Mapping */
+  --font-size: 16px;
+  --background: var(--chalk);
+  --foreground: var(--charcoal);
+  --card: var(--chalk);
+  --card-foreground: var(--charcoal);
+  --popover: var(--chalk);
+  --popover-foreground: var(--charcoal);
+  --primary: var(--charcoal);
+  --primary-foreground: var(--chalk);
+  --secondary: transparent;
+  --secondary-foreground: var(--charcoal);
+  --muted: var(--charcoal-12);
+  --muted-foreground: var(--charcoal-60);
+  --accent: var(--chalk);
+  --accent-foreground: var(--charcoal);
+  --destructive: var(--error);
+  --destructive-foreground: var(--chalk);
+  --border: var(--charcoal-12);
+  --input: transparent;
+  --input-background: var(--chalk);
+  --ring: var(--turquoise);
+  --chart-1: var(--data-1);
+  --chart-2: var(--data-2);
+  --chart-3: var(--data-3);
+  --chart-4: var(--data-4);
+  --chart-5: var(--data-5);
+  --radius: var(--radius-md);
+  --sidebar: var(--charcoal);
+  --sidebar-foreground: var(--chalk);
+  --sidebar-primary: var(--chalk);
+  --sidebar-primary-foreground: var(--charcoal);
+  --sidebar-accent: var(--charcoal-20);
+  --sidebar-accent-foreground: var(--chalk);
+  --sidebar-border: var(--charcoal-24);
+  --sidebar-ring: var(--turquoise);
+  --font-weight-medium: var(--font-medium);
+  --font-weight-normal: var(--font-regular);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 8px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  
+  /* Proppia Custom Color Utilities */
+  --color-chalk: var(--chalk);
+  --color-charcoal: var(--charcoal);
+  --color-yellow: var(--yellow);
+  --color-mint-green: var(--mint-green);
+  --color-turquoise: var(--turquoise);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-info: var(--info);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  /**
+  * Default typography styles for HTML elements
+  * Note: Production should use BW Nista font family
+  */
+
+  html {
+    font-size: var(--font-size);
+  }
+
+  h1 {
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold);
+    line-height: var(--leading-tight);
+  }
+
+  h2 {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-bold);
+    line-height: var(--leading-tight);
+  }
+
+  h3 {
+    font-size: var(--text-xl);
+    font-weight: var(--font-medium);
+    line-height: var(--leading-tight);
+  }
+
+  h4 {
+    font-size: var(--text-lg);
+    font-weight: var(--font-medium);
+    line-height: var(--leading-tight);
+  }
+
+  p {
+    font-size: var(--text-base);
+    font-weight: var(--font-regular);
+    line-height: var(--leading-normal);
+  }
+
+  label {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    line-height: var(--leading-normal);
+  }
+
+  button {
+    font-size: var(--text-base);
+    font-weight: var(--font-medium);
+    line-height: var(--leading-normal);
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: var(--text-base);
+    font-weight: var(--font-regular);
+    line-height: var(--leading-normal);
+  }
+}

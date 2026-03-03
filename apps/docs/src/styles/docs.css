@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Pixel — gradiente de la línea del logo principal (tokenizado) */
+    --pixel-gradient: linear-gradient(90deg, #fae23e 0%, #6dccdd 100%);
+    /* Pixel — siempre cuadrado estricto, sin bordes redondeados */
+    --pixel-radius: 0;
+    /* Blur levels para pixel difuminado */
+    --pixel-blur-1: 2px;
+    --pixel-blur-2: 8px;
+    --pixel-blur-3: 20px;
+    --pixel-blur-4: 40px;
+    /* Gradiente decorativo de marca (3 colores — barras, fondos, no pixels) */
+    --brand-gradient: linear-gradient(135deg, #F6E342 0%, #75EFB1 50%, #23F8F7 100%);
+  }
+
+  /* Clase utilitaria para pixel — siempre sin border-radius */
+  .pixel {
+    background: var(--pixel-gradient);
+    border-radius: var(--pixel-radius);
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: "Bw Nista Grotesk", ui-sans-serif, system-ui, sans-serif;
+  }
+
+  html {
+    color-scheme: light;
+    scroll-behavior: smooth;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+
+  /* Scrollbar sutil estilo MUI */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-border;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/40;
+  }
+
+  /* Code inline */
+  :not(pre) > code {
+    @apply rounded bg-muted px-1.5 py-0.5 text-[0.8em] font-mono text-foreground;
+  }
+
+  /* Selección de texto con color Proppia */
+  ::selection {
+    background-color: hsl(179 93% 55% / 0.25);
+  }
+}
+
