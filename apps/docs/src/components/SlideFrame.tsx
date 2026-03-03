@@ -61,26 +61,60 @@ export const COVER_PIXELS: Array<{ top: number; left?: number; right?: number }>
   { top: SLIDE_H * 0.31, left:  SLIDE_W * 0.50  },
 ];
 
+// ── Tokens tipográficos y de layout para slides de contenido ─────────────────
+// Tamaños base (a escala SLIDE_W = 1040px)
+export const CONTENT_TITLE_SIZE  = 44;   // px — títulos tipo "SUBLÍNEAS & SERVICIOS" (ligeramente menor que portada)
+export const DIVISION_LABEL_SIZE = 14;   // px — labels de división en header
+export const SLIDE_NUMBER_SIZE   = 16;   // px — números de slide ("03")
+export const CONTENT_TITLE_WEIGHT = 700; // peso "bold" del título principal en slides de contenido
+export const DIVISION_BLOCK_PADDING_Y = Math.round(SLIDE_H * 0.035); // padding vertical para el subtítulo (con más aire)
+
+// Ratios de layout sobre el canvas completo
+export const ACTIVE_ZONE_RATIO   = 0.75; // cols 2–7 ~ 75% del ancho
+export const CONTENT_TITLE_RATIO = 0.45; // título principal ocupa ~45% del ancho (fuerza 2 líneas)
+export const CONTENT_TITLE_EXCLUSION_TOP_RATIO = 0.40;   // banda vertical donde vive el título (inicio)
+export const CONTENT_TITLE_EXCLUSION_BOTTOM_RATIO = 0.64; // banda vertical donde vive el título (fin)
+export const CONTENT_TITLE_EXCLUSION_MARGIN_X = 0.04;     // padding horizontal extra para evitar pixels pegados
+export const HEADER_ZONE_RATIO   = 0.14; // header ~14% del alto
+
+// Grid — espejo de tokens CSS (--grid-line, --grid-line-layout, --grid-stroke)
+export const GRID_LAYOUT_OPACITY    = 0.18;
+export const GRID_DECORATIVE_OPACITY = 0.08;
+export const GRID_STROKE            = 0.5;
+export const CONTENT_GUIDE_OPACITY  = 0.24; // guías adaptativas para subtítulo/título (un poco más visibles)
+
+// Pixel
+export const PIXEL_RADIUS        = 0;    // cuadrado estricto, sin border-radius
+
+// Opacidades específicas de elementos en slides
+export const SLIDE_NUMBER_OPACITY = 0.7;
+
+// Año por defecto en slides de presentación
+export const SLIDE_YEAR = "2026";
+
 export interface SlideLayoutProps {
   children: React.ReactNode;
   mode?: "dark" | "light";
   website?: string;
   year?: string | number;
   copyright?: string;
+  headerCenter?: string;
 }
 
 export function SlideLayout({
   children,
   mode = "dark",
   website = "@proppia.co",
-  year = "2026",
+  year = SLIDE_YEAR,
   copyright,
+  headerCenter,
 }: SlideLayoutProps) {
   const isLight = mode === "light";
   const bg        = isLight ? "#FFFFFF" : SLIDE_BG_DARK;
   const textColor = isLight ? "#000000" : "#FFFFFF";
   const logoSrc   = isLight ? LOGO_LIGHT : LOGO_DARK;
   const copy      = copyright ?? `© Proppia SAS, Todos los derechos reservados.`;
+  const centerLabel = headerCenter ?? website;
 
   return (
     <div
@@ -112,7 +146,7 @@ export function SlideLayout({
           draggable={false}
         />
         <span style={{ fontSize: FRAME_FONT_SIZE, fontWeight: FRAME_FONT_WEIGHT, color: textColor, letterSpacing: "0.02em" }}>
-          {website}
+          {centerLabel}
         </span>
         <span style={{ fontSize: FRAME_FONT_SIZE, fontWeight: FRAME_FONT_WEIGHT, color: textColor, letterSpacing: "0.02em" }}>
           {year}

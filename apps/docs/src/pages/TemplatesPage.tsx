@@ -1087,79 +1087,10 @@ export function TemplatesPage() {
     { label: "Subportada — Análisis de Marca",    content: <SlideSubPortada sectionNum="02" title={"ANÁLISIS\nDE MARCA"} /> },
     { label: "Subportada — Performance & Growth", content: <SlideSubPortada sectionNum="01" title={"PERFORMANCE\n& GROWTH."} /> },
     { label: "Subportada — Brand & Experience",   content: <SlideSubPortada sectionNum="03" title={"BRAND &\nEXPERIENCE\nDESIGN."} /> },
-    // Divisiones Intro
-    { label: "División 1 — Performance & Growth",         content: <SlideDivisionIntro num="1" title={"PERFORMANCE\n& GROWTH."} color="#F6E342" pageNum="01" /> },
-    { label: "División 2 — Brand & Experience Design",    content: <SlideDivisionIntro num="2" title={"BRAND &\nEXPERIENCE DESIGN."} color="#75EFB1" pageNum="02" /> },
-    { label: "División 3 — Digital Products & AI Lab",    content: <SlideDivisionIntro num="3" title={"DIGITAL PRODUCTS\n& AI LAB."} color="#23F8F7" pageNum="03" /> },
-    // Propósito
-    {
-      label: "Propósito — Performance & Growth",
-      content: <SlideProposito color="#F6E342" division="Proppia: Performance & Growth"
-        title="Transformar la estrategia en resultados medibles."
-        body="Acompañamos a las marcas a crecer con visión de negocio, optimizando sus canales y métricas." />,
-    },
-    {
-      label: "Propósito — Brand & Experience Design",
-      content: <SlideProposito color="#75EFB1" pageNum="11" division="Proppia: Brand & Experience Design"
-        title="Construir marcas coherentes, memorables y estratégicamente sólidas."
-        body="Integramos identidad, comunicación y experiencia en un mismo ecosistema visual." />,
-    },
-    {
-      label: "Propósito — Digital Products & AI Lab",
-      content: <SlideProposito color="#23F8F7" pageNum="17" division="Proppia: Digital Product & AI Lab"
-        title="Ser la columna vertebral tecnológica de Proppia."
-        body="Convertimos ideas y estrategias en productos digitales tangibles." />,
-    },
-    // No somos una agencia
-    { label: "No somos una agencia", content: <SlideNoSomosAgencia /> },
-    // Metodología
+    // Metodología (única familia que mantenemos de las vistas intermedias)
     { label: "Metodología — Etapas 1–3: Ideación · Validación · Diseño",       content: <SlideMetodologia stages={metStages1} pageNum="26" lineColor="#F6E342" /> },
     { label: "Metodología — Etapas 4–6: Desarrollo · Testeo · Lanzamiento",    content: <SlideMetodologia stages={metStages2} pageNum="27" lineColor="#F6E342" /> },
     { label: "Metodología — Etapas 7–9: Atracción · Conversión · Retención",   content: <SlideMetodologia stages={metStages3} pageNum="28" lineColor="#75EFB1" /> },
-    // Servicios
-    {
-      label: "Servicio — Business Strategy & Growth Planning",
-      content: <SlideServicio subCode="1.1" title="Business Strategy & Growth Planning" color="#F6E342"
-        division="Proppia: Performance & Growth" pageNum="04"
-        items={["Diagnóstico del negocio y levantamiento de objetivos estratégicos.", "Diseño de estrategias de crecimiento personalizadas.", "Definición de roadmaps trimestrales de acción.", "Auditorías de ecosistemas digitales y embudos de conversión.", "Planificación integral de marketing, comunicación y tecnología."]} />,
-    },
-    {
-      label: "Servicio — Branding & Comunicación Creativa",
-      content: <SlideServicio subCode="2.1" title="Branding & Comunicación Creativa" color="#75EFB1"
-        division="Proppia: Brand & Experience Design" pageNum="13"
-        items={["Naming, propósito y territorio de marca.", "Diseño de identidad visual (logo, paleta, tipografía).", "Manuales y sistemas de marca.", "Conceptualización de campañas publicitarias integrales.", "Adaptación de la campaña a diferentes medios."]} />,
-    },
-    // Casos de Éxito
-    {
-      label: "Caso de Éxito — Handtmann Andina y México",
-      content: <SlideCasoHeader pageNum="05" client="Handtmann Andina y México"
-        industry="Maquinaria de procesamiento alimenticio (B2B)"
-        country="Colombia, Perú, Ecuador y México"
-        challenge="Unificar la estrategia digital y comercial en cuatro países y fortalecer el posicionamiento regional."
-        accentColor="#23F8F7" />,
-    },
-    {
-      label: "Caso de Éxito — DISAP LTDA.",
-      content: <SlideCasoHeader pageNum="09" client="DISAP LTDA." accentColor="#75EFB1"
-        industry="Soluciones industriales para manejo de fluidos (B2B)"
-        country="Colombia"
-        challenge="Incrementar la facturación, generar demanda calificada y modernizar el proceso comercial." />,
-    },
-    // Equipo
-    {
-      label: "Equipo — Alex Cifuentes, Founder & CEO",
-      content: <SlideEquipoIndividual pageNum="15" name="Alex Cifuentes" role="Founder & CEO" initials="AC"
-        tagline="Alex lidera la dirección general y estratégica de Proppia."
-        bio="Ha acompañado a empresas B2B y B2C de alto valor en su transformación digital y comercial, impulsando procesos de crecimiento basados en estrategia, tecnología y acompañamiento comercial." />,
-    },
-    {
-      label: "Equipo — Danna Vargas, Head of Growth & Operations",
-      content: <SlideEquipoIndividual pageNum="16" name="Danna Vargas" role="Head of Growth & Operations" initials="DV" accentColor="#75EFB1"
-        tagline="Danna lidera la planeación, coordinación y ejecución de las estrategias de crecimiento."
-        bio="Su rol combina la dirección de performance digital con la gestión operativa de los proyectos, garantizando eficiencia, coherencia y resultados medibles." />,
-    },
-    // Cierre
-    { label: "Cierre — Hazlo tuyo, hazlo Proppia.", content: <SlideCierre /> },
   ];
 
   const expand = (i: number) => setPresentingIndex(i);
@@ -1209,136 +1140,21 @@ export function TemplatesPage() {
         </div>
       </section>
 
-      {/* DIVISIONES INTRO */}
-      <section className="mb-12">
-        <h2 className="mb-1 text-base font-semibold text-foreground">División — Intro</h2>
-        <p className="mb-5 text-sm text-muted-foreground">Círculos concéntricos con logo, línea de color por división y badge numerado.</p>
-        <div className="grid gap-5 sm:grid-cols-3">
-          <SlideFrame label="Performance & Growth" onExpand={() => expand(6)}>
-            <SlideDivisionIntro num="1" title={"PERFORMANCE\n& GROWTH."} color="#F6E342" pageNum="01" />
-          </SlideFrame>
-          <SlideFrame label="Brand & Experience Design" onExpand={() => expand(7)}>
-            <SlideDivisionIntro num="2" title={"BRAND &\nEXPERIENCE DESIGN."} color="#75EFB1" pageNum="02" />
-          </SlideFrame>
-          <SlideFrame label="Digital Products & AI Lab" onExpand={() => expand(8)}>
-            <SlideDivisionIntro num="3" title={"DIGITAL PRODUCTS\n& AI LAB."} color="#23F8F7" pageNum="03" />
-          </SlideFrame>
-        </div>
-      </section>
-
-      {/* PROPÓSITO */}
-      <section className="mb-12">
-        <h2 className="mb-1 text-base font-semibold text-foreground">Propósito</h2>
-        <p className="mb-5 text-sm text-muted-foreground">Dos columnas: misión + enfoque. Línea de color por división.</p>
-        <div className="grid gap-5 sm:grid-cols-3">
-          <SlideFrame label="Performance & Growth" onExpand={() => expand(9)}>
-            <SlideProposito color="#F6E342" division="Proppia: Performance & Growth"
-              title="Transformar la estrategia en resultados medibles."
-              body="Acompañamos a las marcas a crecer con visión de negocio, optimizando sus canales y métricas." />
-          </SlideFrame>
-          <SlideFrame label="Brand & Experience Design" onExpand={() => expand(10)}>
-            <SlideProposito color="#75EFB1" pageNum="11" division="Proppia: Brand & Experience Design"
-              title="Construir marcas coherentes, memorables y estratégicamente sólidas."
-              body="Integramos identidad, comunicación y experiencia en un mismo ecosistema visual." />
-          </SlideFrame>
-          <SlideFrame label="Digital Products & AI Lab" onExpand={() => expand(11)}>
-            <SlideProposito color="#23F8F7" pageNum="17" division="Proppia: Digital Product & AI Lab"
-              title="Ser la columna vertebral tecnológica de Proppia."
-              body="Convertimos ideas y estrategias en productos digitales tangibles." />
-          </SlideFrame>
-        </div>
-      </section>
-
-      {/* NO SOMOS UNA AGENCIA */}
-      <section className="mb-12">
-        <h2 className="mb-1 text-base font-semibold text-foreground">No somos una agencia</h2>
-        <p className="mb-5 text-sm text-muted-foreground">Fondo degradado brand, título oscuro, círculos con pilares.</p>
-        <SlideFrame label="No somos una agencia" onExpand={() => expand(12)}>
-          <SlideNoSomosAgencia />
-        </SlideFrame>
-      </section>
-
       {/* METODOLOGÍA — 3 slides */}
       <section className="mb-12">
         <h2 className="mb-1 text-base font-semibold text-foreground">Metodología — Las 9 Etapas</h2>
         <p className="mb-5 text-sm text-muted-foreground">3 slides de 3 etapas cada uno. Círculos con badge numérico y línea horizontal de color.</p>
         <div className="grid gap-5">
-          <SlideFrame label="Etapas 1–3: Ideación · Validación · Diseño" onExpand={() => expand(13)}>
+          <SlideFrame label="Etapas 1–3: Ideación · Validación · Diseño" onExpand={() => expand(6)}>
             <SlideMetodologia stages={metStages1} pageNum="26" lineColor="#F6E342" />
           </SlideFrame>
-          <SlideFrame label="Etapas 4–6: Desarrollo · Testeo · Lanzamiento" onExpand={() => expand(14)}>
+          <SlideFrame label="Etapas 4–6: Desarrollo · Testeo · Lanzamiento" onExpand={() => expand(7)}>
             <SlideMetodologia stages={metStages2} pageNum="27" lineColor="#F6E342" />
           </SlideFrame>
-          <SlideFrame label="Etapas 7–9: Atracción · Conversión · Retención" onExpand={() => expand(15)}>
+          <SlideFrame label="Etapas 7–9: Atracción · Conversión · Retención" onExpand={() => expand(8)}>
             <SlideMetodologia stages={metStages3} pageNum="28" lineColor="#75EFB1" />
           </SlideFrame>
         </div>
-      </section>
-
-      {/* SLIDE DE SERVICIO */}
-      <section className="mb-12">
-        <h2 className="mb-1 text-base font-semibold text-foreground">Slide de Servicio</h2>
-        <p className="mb-5 text-sm text-muted-foreground">Código de sub-línea, título del servicio, lista numerada en dos columnas.</p>
-        <div className="grid gap-5 sm:grid-cols-2">
-          <SlideFrame label="Business Strategy & Growth Planning" onExpand={() => expand(16)}>
-            <SlideServicio subCode="1.1" title="Business Strategy & Growth Planning" color="#F6E342"
-              division="Proppia: Performance & Growth" pageNum="04"
-              items={["Diagnóstico del negocio y levantamiento de objetivos estratégicos.", "Diseño de estrategias de crecimiento personalizadas.", "Definición de roadmaps trimestrales de acción.", "Auditorías de ecosistemas digitales y embudos de conversión.", "Planificación integral de marketing, comunicación y tecnología."]} />
-          </SlideFrame>
-          <SlideFrame label="Branding & Comunicación Creativa" onExpand={() => expand(17)}>
-            <SlideServicio subCode="2.1" title="Branding & Comunicación Creativa" color="#75EFB1"
-              division="Proppia: Brand & Experience Design" pageNum="13"
-              items={["Naming, propósito y territorio de marca.", "Diseño de identidad visual (logo, paleta, tipografía).", "Manuales y sistemas de marca.", "Conceptualización de campañas publicitarias integrales.", "Adaptación de la campaña a diferentes medios."]} />
-          </SlideFrame>
-        </div>
-      </section>
-
-      {/* CASO DE ÉXITO */}
-      <section className="mb-12">
-        <h2 className="mb-1 text-base font-semibold text-foreground">Caso de Éxito — Header</h2>
-        <p className="mb-5 text-sm text-muted-foreground">Nombre del cliente, país, industria y desafío. Glow de color ambiental.</p>
-        <div className="grid gap-5 sm:grid-cols-2">
-          <SlideFrame label="Handtmann Andina y México" onExpand={() => expand(18)}>
-            <SlideCasoHeader pageNum="05" client="Handtmann Andina y México"
-              industry="Maquinaria de procesamiento alimenticio (B2B)"
-              country="Colombia, Perú, Ecuador y México"
-              challenge="Unificar la estrategia digital y comercial en cuatro países y fortalecer el posicionamiento regional."
-              accentColor="#23F8F7" />
-          </SlideFrame>
-          <SlideFrame label="DISAP LTDA." onExpand={() => expand(19)}>
-            <SlideCasoHeader pageNum="09" client="DISAP LTDA." accentColor="#75EFB1"
-              industry="Soluciones industriales para manejo de fluidos (B2B)"
-              country="Colombia"
-              challenge="Incrementar la facturación, generar demanda calificada y modernizar el proceso comercial." />
-          </SlideFrame>
-        </div>
-      </section>
-
-      {/* EQUIPO */}
-      <section className="mb-12">
-        <h2 className="mb-1 text-base font-semibold text-foreground">Equipo — Individual</h2>
-        <p className="mb-5 text-sm text-muted-foreground">Frame circular con anillos dobles, nombre en color de acento, bio estructurada.</p>
-        <div className="grid gap-5 sm:grid-cols-2">
-          <SlideFrame label="Alex Cifuentes — Founder & CEO" onExpand={() => expand(20)}>
-            <SlideEquipoIndividual pageNum="15" name="Alex Cifuentes" role="Founder & CEO" initials="AC"
-              tagline="Alex lidera la dirección general y estratégica de Proppia."
-              bio="Ha acompañado a empresas B2B y B2C de alto valor en su transformación digital y comercial, impulsando procesos de crecimiento basados en estrategia, tecnología y acompañamiento comercial." />
-          </SlideFrame>
-          <SlideFrame label="Danna Vargas — Head of Growth & Operations" onExpand={() => expand(21)}>
-            <SlideEquipoIndividual pageNum="16" name="Danna Vargas" role="Head of Growth & Operations" initials="DV" accentColor="#75EFB1"
-              tagline="Danna lidera la planeación, coordinación y ejecución de las estrategias de crecimiento."
-              bio="Su rol combina la dirección de performance digital con la gestión operativa de los proyectos, garantizando eficiencia, coherencia y resultados medibles." />
-          </SlideFrame>
-        </div>
-      </section>
-
-      {/* CIERRE */}
-      <section className="mb-4">
-        <h2 className="mb-1 text-base font-semibold text-foreground">Cierre</h2>
-        <p className="mb-5 text-sm text-muted-foreground">Headline grande, línea gradiente decorativa, tagline final.</p>
-        <SlideFrame label="Cierre — Hazlo tuyo, hazlo Proppia." onExpand={() => expand(22)}>
-          <SlideCierre />
-        </SlideFrame>
       </section>
     </div>
   );

@@ -2,24 +2,134 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Check, X } from "lucide-react";
 import { PageHeader } from "../../components/PageHeader";
 import {
+  ACTIVE_ZONE_RATIO,
+  BRAND_GRADIENT,
   BRAND_TURQUOISE,
+  CONTENT_TITLE_RATIO,
+  CONTENT_TITLE_SIZE,
+  CONTENT_TITLE_WEIGHT,
+  CONTENT_GUIDE_OPACITY,
+  CONTENT_TITLE_EXCLUSION_TOP_RATIO,
+  CONTENT_TITLE_EXCLUSION_BOTTOM_RATIO,
+  CONTENT_TITLE_EXCLUSION_MARGIN_X,
   COVER_COL_W,
   COVER_LOGO_H,
   COVER_PIXELS,
   COVER_TITLE_SIZE,
   COVER_YEAR_SIZE,
+  DIVISION_LABEL_SIZE,
+  DIVISION_BLOCK_PADDING_Y,
   FRAME_H,
   FRAME_PAD_X,
+  GRID_LAYOUT_OPACITY,
+  GRID_STROKE,
+  LOGO_DARK,
   PIXEL_PX,
+  PIXEL_RADIUS,
   PresentationModal,
   SlideFrame,
   SlideLayout,
   SLIDE_BG_DARK,
+  SLIDE_NUMBER_OPACITY,
+  SLIDE_NUMBER_SIZE,
+  SLIDE_YEAR,
   SLIDE_W,
   SLIDE_H,
   LOGO_WORDMARK_DARK,
   type SlideEntry,
 } from "../../components/SlideFrame";
+
+type PixelZone = "margins" | "intersections";
+
+interface ExcludeZone {
+  x1: number; // porcentaje [0–100]
+  y1: number;
+  x2: number;
+  y2: number;
+}
+
+interface PixelPosition {
+  left: number;
+  top: number;
+}
+
+function isInsideZone(x: number, y: number, zone: ExcludeZone) {
+  return x >= zone.x1 && x <= zone.x2 && y >= zone.y1 && y <= zone.y2;
+}
+
+function generatePixels(
+  slideW: number,
+  slideH: number,
+  zone: PixelZone,
+  count: number = 8,
+  excludeZones?: ExcludeZone[],
+): PixelPosition[] {
+  if (zone === "margins") {
+    const pixels: PixelPosition[] = [];
+    const minDist = 8; // distancia mínima en porcentaje entre pixels
+    const marginWidthPerc = (COVER_COL_W / slideW) * 100;
+    let safety = 0;
+
+    while (pixels.length < count && safety < count * 40) {
+      safety += 1;
+      const onLeft = Math.random() < 0.5;
+      const xPerc = onLeft
+        ? Math.random() * marginWidthPerc
+        : 100 - marginWidthPerc + Math.random() * marginWidthPerc;
+      const yPerc = 10 + Math.random() * 80; // 10–90%
+
+      if (
+        pixels.some((p) => {
+          const dx = (p.left / slideW) * 100 - xPerc;
+          const dy = (p.top / slideH) * 100 - yPerc;
+          return Math.hypot(dx, dy) < minDist;
+        })
+      ) {
+        continue;
+      }
+
+      if (
+        excludeZones &&
+        excludeZones.some((z) => isInsideZone(xPerc, yPerc, z))
+      ) {
+        continue;
+      }
+
+      pixels.push({
+        left: (xPerc / 100) * slideW,
+        top: (yPerc / 100) * slideH,
+      });
+    }
+
+    return pixels;
+  }
+
+  // Intersecciones del grid 8×4 (líneas internas)
+  const candidates: { xPerc: number; yPerc: number }[] = [];
+  for (let i = 1; i <= 7; i++) {
+    for (let j = 1; j <= 3; j++) {
+      const xPerc = (i / 8) * 100;
+      const yPerc = (j / 4) * 100;
+      candidates.push({ xPerc, yPerc });
+    }
+  }
+
+  const filtered = candidates.filter(({ xPerc, yPerc }) => {
+    if (!excludeZones) return true;
+    return !excludeZones.some((z) => isInsideZone(xPerc, yPerc, z));
+  });
+
+  // Mezclar y tomar N
+  for (let i = filtered.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
+  }
+
+  return filtered.slice(0, count).map(({ xPerc, yPerc }) => ({
+    left: (xPerc / 100) * slideW,
+    top: (yPerc / 100) * slideH,
+  }));
+}
 
 // ── SlideGrid SVG helper — usa los tokens CSS del grid ───
 function SlideGrid({
@@ -238,98 +348,362 @@ function SlideDecorativeCover() {
             letterSpacing: "0.04em", color: "white", margin: 0,
           }}
         >
-          2026
+          {SLIDE_YEAR}
         </p>
       </div>
     </div>
   );
 }
 
-// 2. Modo decorativo — slide de sección
-function SlideDecorativeSection() {
+interface SectionSlideProps {
+  number: string;
+  sectionTitle: string;
+  pixelCount?: number;
+  year?: string;
+}
+
+// 2. Slide de sección — 8×4 decorativo, número fijo en col 2 y título centrado
+export function SectionSlide({
+  number,
+  sectionTitle,
+  pixelCount = 8,
+}: SectionSlideProps) {
+  const pixels = generatePixels(SLIDE_W, SLIDE_H, "margins", pixelCount);
+
   return (
-    <SlideLayout>
-      <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden" }}>
-        <SlideGrid cols={8} rows={4} mode="decorative" />
-        <Px top={50}  left={310} size={PIXEL_PX} color="#75EFB1" />
-        <Px top={20}  left={750} size={PIXEL_PX} color="#F6E342" />
-        <Px top={265} left={80}  size={PIXEL_PX} color="#23F8F7" />
-        <Px top={370} left={240} size={PIXEL_PX} color="#75EFB1" />
-        <Px top={215} left={855} size={PIXEL_PX} color="#23F8F7" />
-        <Px top={440} left={640} size={PIXEL_PX} color="#F6E342" />
-        {/* Número de sección */}
-        <p style={{ position: "absolute", left: 390, top: 100, fontSize: COVER_YEAR_SIZE, fontWeight: 500, color: "rgba(255,255,255,0.5)" }}>02</p>
-        {/* Título de sección */}
-        <div style={{ position: "absolute", left: 390, top: 150, color: "white" }}>
-          <p style={{ fontSize: COVER_TITLE_SIZE, fontWeight: 900, lineHeight: 1.1, letterSpacing: "-0.01em" }}>ANÁLISIS<br />DE MARCA</p>
-        </div>
+    <div
+      style={{
+        position: "relative",
+        width: SLIDE_W,
+        height: SLIDE_H,
+        backgroundColor: SLIDE_BG_DARK,
+        overflow: "hidden",
+      }}
+    >
+      <SlideGrid cols={8} rows={4} mode="decorative" />
+
+      {/* Pixels en márgenes (cols 1 y 8) */}
+      {pixels.map((p, i) => (
+        <div
+          key={i}
+          style={{
+            position: "absolute",
+            left: p.left,
+            top: p.top,
+            width: PIXEL_PX,
+            height: PIXEL_PX,
+            background: BRAND_GRADIENT,
+            borderRadius: 0,
+            pointerEvents: "none",
+          }}
+        />
+      ))}
+
+      {/* Número — alineado al borde izquierdo de la col 2 */}
+      <p
+        style={{
+          position: "absolute",
+          left: COVER_COL_W,
+          top: SLIDE_H * 0.35,
+          margin: 0,
+          fontSize: "1.2em",
+          fontWeight: 700,
+          color: "white",
+          opacity: 0.9,
+        }}
+      >
+        {number}
+      </p>
+
+      {/* Título centrado en la zona activa (cols 2–7) */}
+      <div
+        style={{
+          position: "absolute",
+          top: SLIDE_H * 0.52,
+          left: 0,
+          right: 0,
+          display: "flex",
+          justifyContent: "center",
+          pointerEvents: "none",
+        }}
+      >
+        <p
+          style={{
+            margin: 0,
+            maxWidth: "75%",
+            fontSize: "3.2em",
+            fontWeight: 900,
+            color: "white",
+            textAlign: "center",
+            letterSpacing: "-0.01em",
+            lineHeight: 1.1,
+          }}
+        >
+          {sectionTitle}
+        </p>
       </div>
-    </SlideLayout>
+    </div>
   );
 }
 
-// 3. Modo layout — slide de subportada (referente: SUBLÍNEAS & SERVICIOS)
-// Consume SlideLayout tokenizado (header + footer) · grid 8×4 estándar brandbook · pixels aleatorios
-function SlideLayoutContent() {
-  const [randomPixels] = useState(() =>
-    Array.from({ length: 8 }, () => ({
-      top: 8 + Math.random() * 84,
-      left: 5 + Math.random() * 90,
-    }))
+// Wrapper legacy para mantener compat compat con la demo existente
+function SlideDecorativeSection() {
+  return (
+    <SectionSlide number="02" sectionTitle="ANÁLISIS DE MARCA" />
+  );
+}
+
+interface ContentSlideProps {
+  number: string;
+  division: string;
+  title: string;
+  year?: string;
+  pixelCount?: number;
+}
+
+// 3. Slide de contenido — modo layout con header y grid 8×4
+export function ContentSlide({
+  number,
+  division,
+  title,
+  year = SLIDE_YEAR,
+  pixelCount = 8,
+}: ContentSlideProps) {
+  const headerPerc = (FRAME_H / SLIDE_H) * 100;
+  const marginPerc = (COVER_COL_W / SLIDE_W) * 100;
+  const titleWidthPerc = CONTENT_TITLE_RATIO * 100;
+  const titleCenterXPerc = 50;
+  const titleMarginXPerc = CONTENT_TITLE_EXCLUSION_MARGIN_X * 100;
+  const rawTitleX1 = titleCenterXPerc - titleWidthPerc / 2 - titleMarginXPerc;
+  const rawTitleX2 = titleCenterXPerc + titleWidthPerc / 2 + titleMarginXPerc;
+  const titleX1 = Math.max(0, rawTitleX1);
+  const titleX2 = Math.min(100, rawTitleX2);
+  const titleY1 = CONTENT_TITLE_EXCLUSION_TOP_RATIO * 100;
+  const titleY2 = CONTENT_TITLE_EXCLUSION_BOTTOM_RATIO * 100;
+
+  const [pixels] = useState(() =>
+    generatePixels(SLIDE_W, SLIDE_H, "intersections", pixelCount, [
+      { x1: 0, y1: 0, x2: marginPerc, y2: 100 },
+      { x1: 100 - marginPerc, y1: 0, x2: 100, y2: 100 },
+      { x1: 0, y1: 0, x2: 100, y2: headerPerc },
+      { x1: titleX1, y1: titleY1, x2: titleX2, y2: titleY2 },
+    ]),
   );
 
+  const slideRef = useRef<HTMLDivElement>(null);
+  const subtitleRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLParagraphElement>(null);
+  const [subtitleHLines, setSubtitleHLines] = useState<number[]>([]);
+  const [titleHLines, setTitleHLines] = useState<number[]>([]);
+  const [titleVLines, setTitleVLines] = useState<number[]>([]);
+
+  useEffect(() => {
+    const slide = slideRef.current;
+    const subtitleEl = subtitleRef.current;
+    const titleEl = titleRef.current;
+    if (!slide || !titleEl) return;
+
+    const measure = () => {
+      const slideRect = slide.getBoundingClientRect();
+      const titleRect = titleEl.getBoundingClientRect();
+      if (slideRect.height === 0) return;
+
+      const titleTopRatio = (titleRect.top - slideRect.top) / slideRect.height;
+      const titleBottomRatio =
+        (titleRect.bottom - slideRect.top) / slideRect.height;
+      const titleLeftRatio =
+        (titleRect.left - slideRect.left) / slideRect.width;
+      const titleRightRatio =
+        (titleRect.right - slideRect.left) / slideRect.width;
+
+      setTitleHLines([titleTopRatio, titleBottomRatio]);
+      setTitleVLines([titleLeftRatio, titleRightRatio]);
+
+      if (subtitleEl) {
+        const subtitleRect = subtitleEl.getBoundingClientRect();
+        const subtitleTopRatio =
+          (subtitleRect.top - slideRect.top) / slideRect.height;
+        const subtitleBottomRatio =
+          (subtitleRect.bottom - slideRect.top) / slideRect.height;
+        setSubtitleHLines([subtitleTopRatio, subtitleBottomRatio]);
+      }
+    };
+
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(slide);
+    return () => ro.disconnect();
+  }, []);
+
+  const scale = 1;
+
+  // Forzar que "&" vaya con "SERVICIOS" en la segunda línea cuando aplique
+  const marker = " & ";
+  let displayTitle = title;
+  const markerIndex = title.indexOf(marker);
+  if (markerIndex !== -1) {
+    const first = title.slice(0, markerIndex);
+    const second = title.slice(markerIndex + 1); // incluye "& SERVICIOS"
+    displayTitle = `${first}\n${second}`;
+  }
+
   return (
-    <SlideLayout website="03" year="2025">
-      <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden" }}>
-        {/* Grid 8×4 — estándar brandbook (no 4×4) */}
+    <SlideLayout mode="dark" website="@proppia.co" year={year}>
+      <div
+        ref={slideRef}
+        style={{
+          position: "relative",
+          width: "100%",
+          height: "100%",
+          overflow: "hidden",
+        }}
+      >
+        {/* Grid base en modo layout */}
         <SlideGrid cols={8} rows={4} mode="layout" />
 
-        {/* Subtítulo — división, respetando área de contenido (FRAME_H / FOOTER_H) */}
-        <p
+        {/* Líneas horizontales adaptativas alineadas a subtítulo y título */}
+        <svg
           style={{
-            position: "absolute", left: FRAME_PAD_X, right: FRAME_PAD_X, top: 16,
-            fontSize: 14, fontStyle: "italic", color: "#23F8F7",
-            textAlign: "center", margin: 0,
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            pointerEvents: "none",
+            opacity: CONTENT_GUIDE_OPACITY,
           }}
         >
-          Proppia: Performance & Growth
-        </p>
+          {subtitleHLines.map((y, i) => (
+            <line
+              key={`sub-${i}`}
+              x1="0"
+              y1={`${y * 100}%`}
+              x2="100%"
+              y2={`${y * 100}%`}
+              stroke="var(--grid-line-layout)"
+              strokeWidth={GRID_STROKE}
+            />
+          ))}
+          {titleHLines.map((y, i) => (
+            <line
+              key={`title-h-${i}`}
+              x1="0"
+              y1={`${y * 100}%`}
+              x2="100%"
+              y2={`${y * 100}%`}
+              stroke="var(--grid-line-layout)"
+              strokeWidth={GRID_STROKE}
+            />
+          ))}
+          {titleVLines.map((x, i) => (
+            <line
+              key={`title-v-${i}`}
+              x1={`${x * 100}%`}
+              y1="0"
+              x2={`${x * 100}%`}
+              y2="100%"
+              stroke="var(--grid-line-layout)"
+              strokeWidth={GRID_STROKE}
+            />
+          ))}
+        </svg>
 
-        {/* Título principal — centrado */}
-        <div style={{
-          position: "absolute", inset: 0,
-          display: "flex", alignItems: "center", justifyContent: "center",
-          paddingTop: 40,
-        }}>
+        {/* Label de división — bajo el header de SlideLayout, en su propio contenedor */}
+        <div
+          ref={subtitleRef}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            paddingTop: scale * DIVISION_BLOCK_PADDING_Y,
+            paddingBottom: scale * DIVISION_BLOCK_PADDING_Y,
+            textAlign: "center",
+          }}
+        >
           <p
             style={{
-              fontSize: 28, fontWeight: 700, color: "white",
-              letterSpacing: "-0.02em", lineHeight: 1.1, margin: 0,
-              textAlign: "center",
+              margin: 0,
+              fontFamily: "var(--font-sans)",
+              fontStyle: "italic",
+              fontSize: scale * DIVISION_LABEL_SIZE,
+              color: "hsl(var(--primary))",
             }}
           >
-            SUBLÍNEAS<br />& SERVICIOS
+            {division}
           </p>
         </div>
 
-        {/* Pixels aleatorios — cyan, mismo tamaño */}
-        {randomPixels.map((p, i) => (
+        {/* Área de contenido: filas 2–4, cols 2–7 */}
+        <div
+          style={{
+            position: "absolute",
+            top: FRAME_H,
+            bottom: 0,
+            left: COVER_COL_W,
+            right: COVER_COL_W,
+          }}
+        >
+          {/* Título principal (y opcionalmente número) en bloque alineado y centrado */}
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: SLIDE_W * CONTENT_TITLE_RATIO,
+              maxWidth: SLIDE_W * CONTENT_TITLE_RATIO,
+            }}
+          >
+            <p
+              ref={titleRef}
+              style={{
+                margin: 0,
+                fontFamily: "var(--font-sans)",
+                fontSize: scale * CONTENT_TITLE_SIZE,
+                fontWeight: CONTENT_TITLE_WEIGHT,
+                lineHeight: 1.1,
+                color: "var(--foreground)",
+                textAlign: "center",
+                textTransform: "uppercase",
+                whiteSpace: "pre-wrap",
+              }}
+            >
+              {displayTitle}
+            </p>
+          </div>
+        </div>
+
+        {/* Pixels en intersecciones del grid */}
+        {pixels.map((p, i) => (
           <div
             key={i}
             style={{
               position: "absolute",
-              left: `${p.left}%`,
-              top: `${p.top}%`,
+              left: p.left,
+              top: p.top,
               width: PIXEL_PX,
               height: PIXEL_PX,
-              background: BRAND_TURQUOISE,
-              borderRadius: 0,
+              background: BRAND_GRADIENT,
+              borderRadius: PIXEL_RADIUS,
+              pointerEvents: "none",
               transform: "translate(-50%, -50%)",
             }}
           />
         ))}
       </div>
     </SlideLayout>
+  );
+}
+
+// Wrapper legacy para mantener compat compat con la demo existente
+function SlideLayoutContent() {
+  return (
+    <ContentSlide
+      number="03"
+      division="Proppia: Performance & Growth"
+      title="SUBLÍNEAS & SERVICIOS"
+      year={SLIDE_YEAR}
+    />
   );
 }
 
@@ -371,7 +745,7 @@ function SlideComparison({ mode }: { mode: "decorative" | "layout" }) {
   }
 
   return (
-    <SlideLayout website="@proppia.co" year="2026">
+    <SlideLayout website="@proppia.co" year={SLIDE_YEAR}>
     <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden" }}>
       <SlideGrid cols={8} rows={4} mode={mode} />
       <>
@@ -721,6 +1095,25 @@ export function FoundationsGridPage() {
           <SlideFrame label="Layout · --grid-line-layout (0.18)" onExpand={() => expand(8)}>
             <SlideComparison mode="layout" />
           </SlideFrame>
+        </div>
+      </section>
+
+      {/* ARQUITECTURA ESCALABLE */}
+      <section className="mb-12">
+        <h2 className="mb-1 text-base font-semibold text-foreground">Arquitectura escalable</h2>
+        <p className="mb-5 text-sm text-muted-foreground">
+          Las slides pueden generarse a partir de datos estructurados, manteniendo la lógica de grid y los tokens del sistema.
+        </p>
+        <div className="overflow-hidden rounded-xl border border-border">
+          <div className="border-b border-border bg-muted/30 px-4 py-2">
+            <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">
+              TypeScript — modelo de datos
+            </span>
+          </div>
+          <pre className="overflow-x-auto p-4 text-[12px] font-mono text-foreground leading-relaxed">{`interface PresentationSlide =
+  | { type: "cover"; title: string; year: string }
+  | { type: "section"; number: string; sectionTitle: string }
+  | { type: "content"; number: string; division: string; title: string };`}</pre>
         </div>
       </section>
 
