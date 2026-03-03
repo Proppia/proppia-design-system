@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Alert, AlertDescription,
   Avatar, AvatarFallback,
@@ -163,7 +163,7 @@ export function LandingPage() {
                 type="email"
                 placeholder="tu@empresa.com"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                 className="flex-1"
                 required
               />

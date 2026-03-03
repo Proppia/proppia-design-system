@@ -8,7 +8,7 @@
   "scripts": {
     "dev:docs": "corepack pnpm --filter @proppia/docs dev",
     "build:ui": "corepack pnpm --filter @proppia/ui build",
-    "build": "corepack pnpm -r build",
+    "build": "corepack pnpm --filter @proppia/ui build && corepack pnpm --filter @proppia/docs build",
     "lint": "corepack pnpm -r lint",
     "format": "prettier . -w",
     "import:branding": "powershell -ExecutionPolicy Bypass -File scripts/import-branding.ps1"
